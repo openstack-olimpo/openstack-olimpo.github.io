@@ -14,3 +14,11 @@ prueba:
 # sleep 59
 # $PLYMOUTH message --text="Booting system without full network configuration..." || :
 ~~~
+~~~
+auto eth1
+iface eth1 inet static 
+		address 192.168.1.110 
+		netmask 255.255.255.0 
+		gateway 192.168.1.1 
+		dns-nameserver 8.8.8.8
+~~~
