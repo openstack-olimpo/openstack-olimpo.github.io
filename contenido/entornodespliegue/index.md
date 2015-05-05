@@ -27,5 +27,9 @@ virtualizadas sobre KVM:
 
 Mediante repositorio del sistema:
 
-#!/bin/bash
+:::bash
 aptitude update
+aptitude upgrade
+aptitude install qemu-kvm libvirt-bin bridge-utils virt-manager
+
+Y con esto tendríamos todos los paquetes necesarios.
