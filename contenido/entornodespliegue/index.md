@@ -26,13 +26,11 @@ virtualizadas sobre KVM:
 ## Instalación de KVM
 
 Mediante repositorio del sistema:
-
+~~~
 :::bash
 aptitude update
-
 aptitude upgrade
-
 aptitude install qemu-kvm libvirt-bin bridge-utils virt-manager
-:::bash
+~~~
 
 Y con esto tendríamos todos los paquetes necesarios.
