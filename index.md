@@ -2,7 +2,7 @@
 layout: blog
 tittle: Fundamentos de Cloud Computing con OpenStack y OpenShift
 menu:
-  - Indice
+  - Índice
 ---
 ### Descripción del curso
 
