@@ -1,53 +1,53 @@
 ---
 layout: blog
-tittle: Introducción al Cloud Computing. OpenStack y OpenShift.
+tittle: Fundamentos de Cloud Computing con OpenStack y OpenShift
 menu:
-  - Unidad 1
+  - Índice
 ---
-## Introducción al Cloud Computing
+### Descripción del curso
+
+El cloud computing o computacion en la nube es una nuevo paradigma que permite ofrecer servicios de computación a través de Internet. Este curso está orientado a conocer las principales características del cloud computing, mediante la utilización de una nube privada de infraestructura con OpenStack y una nube pública de plataforma con OpenShift.
+
+La actividad formativa combina sesiones presenciales con no presenciales. Entre las sesiones presenciales se incluye una visita al [IES Gonzalo Nazareno](http://informatica.gonzalonazareno.org) de Dos Hermanas (Sevilla) para conocer y utilizar la infraestructura de cloud que está en producción en este centro desde el curso 2011-12. Las sesiones no presenciales, en las que se realizarán prácticas de OpenStack y OpenShift, se desarrollarán a través de Google Hangout, que permite que cualquier participante pueda ver cada sesión las veces que desee y en el horario que estime oportuno.
+
+Los ponentes, [José Domingo Muñoz Rodríguez](http://josedomingo.org) y [Alberto
+Molina Coballes](http://albertomolina.wordpress.com), profesores de la Familia
+Profesional de Informática en el IES Gonzalo Nazareno, tienen amplia experiencia
+en cloud computing y han participado hasta la fecha en varios seminarios y
+jornadas sobre el tema a nivel local y estatal.
 
 ###Objetivos
-* Conocer las principales características del Cloud Computing.
-* Conocer las capas principales: capa de infraestructura (IaaS) y plataforma (PaaS)
-* Conocer los distintos tipos de Cloud Computing: públicos, privados o híbridos
-* Conocer diversos usos de tecnologías de Cloud Computing 
-* Conocer algunos proveedores de Cloud Computing de IaaS o PaaS
-* Conocer el proyecto de software libre OpenStack. Importante proyecto para
-proporcionar IaaS tanto en clouds públicos como privados.
-* Conocer las características principales de OpenStack.
-* Conocer el proyecto de software libre OpenShift. Proyecto de Software libre de
-la empresa Red Hat para proporcionar PaaS tanto en clouds públicos como privados.
-* Conocer las características principales de OpenShift.
+* Conocer las principales características del cloud computing y su aplicación en el aula, principalmente las capas de infraestructura (IaaS) y plataforma (PaaS)
+* Utilizar el software OpenStack (IaaS). Software libre que permite gestionar infraestructura en nubes privadas o públicas
+* Utilizar la aplicación OpenShift Online (PaaS). Nube pública de la empresa Red Hat para el despliegue ágil y elástico de aplicaciones web
+* Utilizar algunas herramientas modernas como vagrant, ansible o github, utilizadas tanto en cloud computing como en otros entornos.
+* Plantear para cada centro las posibilidades económicas o técnicas de implantación o uso de tecnologías de cloud computing
 
 ###Contenidos
+* Cloud Computing. Conceptos.
+* IaaS con OpenStack. Conceptos. Utilización. Instalación.
+* PaaS con OpenShift. Conceptos. Utilización.
+* Opciones para la utilización de cloud computing en el aula
 
-* [Presentación: Introducción al Cloud Computing](presentacion)
+###Calendario
 
-###Enlaces interesantes
+|Fecha|Contenido|Lugar|
+|:---:|---------|-----|
+|21/04/2014|**Sesión 1**<br/>Unidad 1:Introducción al Cloud Computing. OpenStack y OpenShift<br/>Unidad 2: Herraminetas DevOps. Git, Vagrant y Ansible|IES Romero Vargas|
+|28/04/2014|**Sesión 2**<br/><br/>Unidad 4:Introducción a OpenStack. Uso básico de horizon.<br/>Unidad 5: Infraestructura para utilizar OpenStack|IES Gonzalo Nazareno|
+|5/05/2014|**Sesión 3**<br/>Unidad 3:Entornos de pruebas para OpenStack|IES Romero Vargas|
+|7/05/2014|**Sesión 4**<br/>Unidad 6:OpenStack. Instancias.|Webinar|
+|14/05/2014|**Sesión 5**<br/>Unidad 7:OpenStack. Almacenamiento.|Webinar|
+|21/05/2014|**Sesión 6**<br/>Unidad 8:OpenStack. Redes.|Webinar|
+|28/05/2014|**Sesión 7**<br/>Unidad 9:Introducción a PaaS. OpenShift|Webinar|
+|4/06/2014|**Sesión 8**|IES Romero Vargas|
 
-IaaS:
+###Licencia
 
-* [Amazon Web Services](http://aws.amazon.com/es/)
-* [Microsoft Windows Azure](http://www.windowsazure.com/)
-* [RackSpace Cloud](http://www.rackspace.com/cloud/)
-* [HP Cloud Services](https://www.hpcloud.com/)
-* [Google Compute Engine](https://cloud.google.com/products/compute-engine/)
+![cc_by_sa](http://iesgn.github.io/cloud/img/cc_by_sa.png)
 
-PaaS:
+Se permite el uso comercial de la obra y de las posibles obras derivadas, la distribución de las cuales se debe hacer con una licencia igual a la que regula la obra original.
+Creative Commons Attribution ShareAlike 3.0 License.
 
-* [Google App Engine](https://developers.google.com/appengine/)
-* [Red Hat OpenShift](https://www.openshift.com/)
-* [Heroku](http://www.heroku.com/)
-* [Microsoft Windows Azure](http://www.windowsazure.com/)
-* [Cloud Foundry](http://cloudfoundry.org/index.html)
+[http://creativecommons.org/licenses/by-sa/3.0/legalcode](http://creativecommons.org/licenses/by-sa/3.0/legalcode)
 
-Software libre para implantar IaaS:
-
-* [Eucalyptus](http://www.eucalyptus.com)
-* [OpenNebula](http://www.opennebula.org)
-* [CloudStack](http://cloudstack.apache.org/)
-* [OpenStack](http://www.openstack.org)
-
-### Vídeos
-
-* [Cloud computing: la visión de IBM](http://www.youtube.com/watch?v=5rBwfCf5LZE)
