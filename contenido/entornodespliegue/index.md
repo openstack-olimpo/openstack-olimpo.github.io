@@ -26,3 +26,6 @@ virtualizadas sobre KVM:
 ## Instalación de KVM
 
 Mediante repositorio del sistema:
+
+#!/bin/bash
+aptitude update
