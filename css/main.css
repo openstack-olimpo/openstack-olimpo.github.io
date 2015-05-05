@@ -27,9 +27,10 @@ h1, h2, h3, h4, h5, h6 {
 h1 { margin-bottom: 1em; }
 p { margin: 1em 0; }
 
-a         { color: #00a; }
-a:hover   { color: #000; }
-a:visited { color: #a0a; }
+a {
+ color: #000;
+ text-decoration: none;
+}
 
 /*****************************************************************************/
 /*
@@ -61,7 +62,7 @@ header {
   font-family: 'Lato', sans-serif;
   font-weight: 100;
   color: #FFFFFF;
-  width: 300px;
+  width: 357px;
   border: none;
   padding: 34px 25px 22px 50px;
   margin: 0 auto;
@@ -69,6 +70,14 @@ header {
   -webkit-font-smoothing: antialiased;
 }
 
+.portada {
+  background: rgba(0, 0, 0, 0.23);
+  opacity: 0.8;
+  width: 500px;
+  height: 300px;
+  border-radius: 10px;
+  text-align: center;
+}
 p.header {
   font-family: 'Lato', sans-serif;
   font-size: 20px;
@@ -90,11 +99,22 @@ footer {
 
 h1.header {
   font-family: 'Lato', sans-serif;
-  font-size: 30px;
+  font-size: 45px;
   font-weight: 300;
   line-height: 1.3em;
   border-bottom: none;
   margin-top: 0;
+  text-align: center;
+}
+
+h1.boton {
+  font-family: 'Lato', sans-serif;
+  font-size: 25px;
+  font-weight: 300;
+  line-height: 1.3em;
+  border-bottom: none;
+  margin-top: 0;
+  text-align: center;
 }
 
 .site {
@@ -106,8 +126,11 @@ h1.header {
 }
 
 .header a {
-  font-weight: bold;
-  text-decoration: none;
+  font-family: 'Lato', sans-serif;
+  font-size: 20px;
+  font-weight: 300;
+  color: #fff;
+  margin: 0 auto;
 }
 
 .title {
