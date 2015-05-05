@@ -74,7 +74,7 @@
 - nombre: Índice
   items:
    - name: Inicio
-     url: /cloud
+     url: /
    - name: Introducción
      url: /contenido/introduccion
    - name: Entorno Físico
