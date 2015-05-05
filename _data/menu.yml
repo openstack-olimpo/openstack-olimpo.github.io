@@ -71,7 +71,7 @@
   - name: Tareas
     url: tareas
 
-- nombre: Indice
+- nombre: Índice
   items:
    - name: Inicio
      url: /cloud
