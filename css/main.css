@@ -13,6 +13,8 @@
 html, body { height: 100%; }
 
 body {
+  background-image: url("../img/Olimpo.jpg");
+  background-repeat: no-repeat;
   background-color: #FFF;
   font: 13.34px Helvetica, Arial, sans-serif;
   font-size: small;
