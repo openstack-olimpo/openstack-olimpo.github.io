@@ -1,46 +1,20 @@
 ---
 layout: blog
-tittle: Fundamentos de Cloud Computing con OpenStack y OpenShift
+tittle: Introducción
 menu:
   - Índice
 ---
-### Descripción del curso
+Esta es la documentación del proyecto de fin de ciclo superior de **Administración de Sistemas
+Informáticos en Red** (ASIR) realizado en el **I.E.S. Gonzalo Nazareno** (En Dos Hermanas, Sevilla),
+el cual hemos denominado **Openstack Olimpo** (Por el nombre asignado a las máquinas).
 
-El cloud computing o computacion en la nube es una nuevo paradigma que permite ofrecer servicios de computación a través de Internet. Este curso está orientado a conocer las principales características del cloud computing, mediante la utilización de una nube privada de infraestructura con OpenStack y una nube pública de plataforma con OpenShift.
+Este proyecto consiste en la Instalación de Openstack Icehouse sobre Ubuntu en Alta
+Disponibilidad con el almacenamiento (Componentes Glance y Cinder) sobre el sistema de
+ficheros distribuido Ceph. Pretendemos montar este entorno y además realizar una receta en
+Ansible para su despliegue automático.
 
-La actividad formativa combina sesiones presenciales con no presenciales. Entre las sesiones presenciales se incluye una visita al [IES Gonzalo Nazareno](http://informatica.gonzalonazareno.org) de Dos Hermanas (Sevilla) para conocer y utilizar la infraestructura de cloud que está en producción en este centro desde el curso 2011-12. Las sesiones no presenciales, en las que se realizarán prácticas de OpenStack y OpenShift, se desarrollarán a través de Google Hangout, que permite que cualquier participante pueda ver cada sesión las veces que desee y en el horario que estime oportuno.
-
-Los ponentes, [José Domingo Muñoz Rodríguez](http://josedomingo.org) y [Alberto
-Molina Coballes](http://albertomolina.wordpress.com), profesores de la Familia
-Profesional de Informática en el IES Gonzalo Nazareno, tienen amplia experiencia
-en cloud computing y han participado hasta la fecha en varios seminarios y
-jornadas sobre el tema a nivel local y estatal.
-
-###Objetivos
-* Conocer las principales características del cloud computing y su aplicación en el aula, principalmente las capas de infraestructura (IaaS) y plataforma (PaaS)
-* Utilizar el software OpenStack (IaaS). Software libre que permite gestionar infraestructura en nubes privadas o públicas
-* Utilizar la aplicación OpenShift Online (PaaS). Nube pública de la empresa Red Hat para el despliegue ágil y elástico de aplicaciones web
-* Utilizar algunas herramientas modernas como vagrant, ansible o github, utilizadas tanto en cloud computing como en otros entornos.
-* Plantear para cada centro las posibilidades económicas o técnicas de implantación o uso de tecnologías de cloud computing
-
-###Contenidos
-* Cloud Computing. Conceptos.
-* IaaS con OpenStack. Conceptos. Utilización. Instalación.
-* PaaS con OpenShift. Conceptos. Utilización.
-* Opciones para la utilización de cloud computing en el aula
-
-###Calendario
-
-|Fecha|Contenido|Lugar|
-|:---:|---------|-----|
-|21/04/2014|**Sesión 1**<br/>Unidad 1:Introducción al Cloud Computing. OpenStack y OpenShift<br/>Unidad 2: Herraminetas DevOps. Git, Vagrant y Ansible|IES Romero Vargas|
-|28/04/2014|**Sesión 2**<br/><br/>Unidad 4:Introducción a OpenStack. Uso básico de horizon.<br/>Unidad 5: Infraestructura para utilizar OpenStack|IES Gonzalo Nazareno|
-|5/05/2014|**Sesión 3**<br/>Unidad 3:Entornos de pruebas para OpenStack|IES Romero Vargas|
-|7/05/2014|**Sesión 4**<br/>Unidad 6:OpenStack. Instancias.|Webinar|
-|14/05/2014|**Sesión 5**<br/>Unidad 7:OpenStack. Almacenamiento.|Webinar|
-|21/05/2014|**Sesión 6**<br/>Unidad 8:OpenStack. Redes.|Webinar|
-|28/05/2014|**Sesión 7**<br/>Unidad 9:Introducción a PaaS. OpenShift|Webinar|
-|4/06/2014|**Sesión 8**|IES Romero Vargas|
+En esta documentación añadiremos los pasos y, además, todos los errores que encontraremos
+de configuración y como lo resolvemos. Así no solo tendremos una guía paso a paso.
 
 ###Licencia
 
