@@ -26,6 +26,7 @@ virtualizadas sobre KVM:
 ## Instalación de KVM
 
 Mediante repositorio del sistema:
+
 ~~~
 :::bash
 aptitude update
