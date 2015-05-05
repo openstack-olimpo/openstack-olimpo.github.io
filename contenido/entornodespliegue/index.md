@@ -15,7 +15,7 @@ virtualizadas sobre KVM:
 |**AFRODITA**|Proxy 2|256 MB|192.168.100.11|
 |**ZEUS**|Controlador 1|1 GB|192.168.100.12|
 |**HADES**|Controlador 2 1|1 GB|192.168.100.13|
-|**POSEIDON*|Ceph 1|1 GB|192.168.100.14|
+|**POSEIDON**|Ceph 1|1 GB|192.168.100.14|
 |**APOLO**|Ceph 2|1 GB|192.168.100.15|
 |**ARTEMISA**|Ceph 3|1 GB|192.168.100.16|
 |**ARES**|Computación 1|2 GB|192.168.100.17|
