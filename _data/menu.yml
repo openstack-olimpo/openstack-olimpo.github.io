@@ -82,7 +82,7 @@
    - name: Entorno de Despliegue Virtual
      url: /contenido/entornodespliegue
    - name: Balanceadores de Carga
-     url: /contenido/balanceadres
+     url: /contenido/balanceadores
    - name: MariaDB HA Galera
      url: /contenido/mariadb
    - name: Keystone y RabbitMQ
