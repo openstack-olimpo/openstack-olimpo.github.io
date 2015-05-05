@@ -26,9 +26,11 @@ virtualizadas sobre KVM:
 ## Instalación de KVM
 
 Mediante repositorio del sistema:
+
 ~~~
 aptitude update
 aptitude upgrade
 aptitude install qemu-kvm libvirt-bin bridge-utils virt-manager
 ~~~
+
 Y con esto tendríamos todos los paquetes necesarios.
