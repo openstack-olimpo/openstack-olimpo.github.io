@@ -75,25 +75,15 @@
   items:
    - name: Inicio
      url: /cloud
-   - name: Unidad 1
-     url: /curso/u1
-   - name: Unidad 2
-     url: /curso/u2
-   - name: Unidad 3
-     url: /curso/u3
-   - name: Unidad 4
-     url: /curso/u4
-   - name: Unidad 5
-     url: /curso/u5
-   - name: Unidad 6
-     url: /curso/u6
-   - name: Unidad 7
-     url: /curso/u7
-   - name: Unidad 8
-     url: /curso/u8
-   - name: Unidad 9
-     url: /curso/u9
-   - name: Unidad 10
-     url: /curso/u10
-   - name: Foro
-     url: https://github.com/iesgn/cloud/issues
+   - name: Introducción
+     url: /contenido/introduccion
+   - name: Entorno Físico
+     url: /contenido/entornofisico
+   - name: Entorno de Despliegue Virtual
+     url: /contenido/entornodespliegue
+   - name: Balanceadores de Carga
+     url: /contenido/balanceadres
+   - name: MariaDB HA Galera
+     url: /contenido/mariadb
+   - name: Keystone y RabbitMQ
+     url: /contenido/keystone
