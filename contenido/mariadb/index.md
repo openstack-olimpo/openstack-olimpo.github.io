@@ -1,53 +1,249 @@
 ---
 layout: blog
-tittle: Introducción al Cloud Computing. OpenStack y OpenShift.
+tittle: MySQL Alta Disponibilidad con Galera
 menu:
-  - Unidad 1
+  - Índice
 ---
-## Introducción al Cloud Computing
 
-###Objetivos
-* Conocer las principales características del Cloud Computing.
-* Conocer las capas principales: capa de infraestructura (IaaS) y plataforma (PaaS)
-* Conocer los distintos tipos de Cloud Computing: públicos, privados o híbridos
-* Conocer diversos usos de tecnologías de Cloud Computing 
-* Conocer algunos proveedores de Cloud Computing de IaaS o PaaS
-* Conocer el proyecto de software libre OpenStack. Importante proyecto para
-proporcionar IaaS tanto en clouds públicos como privados.
-* Conocer las características principales de OpenStack.
-* Conocer el proyecto de software libre OpenShift. Proyecto de Software libre de
-la empresa Red Hat para proporcionar PaaS tanto en clouds públicos como privados.
-* Conocer las características principales de OpenShift.
+En este apartado configuraremos MySQL en alta disponibilidad con Galera. Utilizaremos
+MariaDB que permite esta integración y no podemos con MySQL Server:
 
-###Contenidos
 
-* [Presentación: Introducción al Cloud Computing](presentacion)
+## GALERA
 
-###Enlaces interesantes
+Galera permite una sincronización entre un cluster multi-master para bases de datos MySQL.
+Sus ventajas descritas en la página oficial:
+World’s most advanced features
 
-IaaS:
++ Synchronous replication
++ Active-active multi-master topology
++ Read and write to any cluster node
++ Automatic membership control, failed nodes drop from the cluster
++ Automatic node joining
++ True parallel replication, on row level
++ Direct client connections, native MySQL look & feel
++ No slave lag
++ No lost transactions
++ Both read and write scalability
++ Smaller client latencies
 
-* [Amazon Web Services](http://aws.amazon.com/es/)
-* [Microsoft Windows Azure](http://www.windowsazure.com/)
-* [RackSpace Cloud](http://www.rackspace.com/cloud/)
-* [HP Cloud Services](https://www.hpcloud.com/)
-* [Google Compute Engine](https://cloud.google.com/products/compute-engine/)
 
-PaaS:
+## INSTALACIÓN Y CONFIGURACIÓN
 
-* [Google App Engine](https://developers.google.com/appengine/)
-* [Red Hat OpenShift](https://www.openshift.com/)
-* [Heroku](http://www.heroku.com/)
-* [Microsoft Windows Azure](http://www.windowsazure.com/)
-* [Cloud Foundry](http://cloudfoundry.org/index.html)
+Lo primero será instalar los paquetes necesarios en ambos nodos (Zeus y Hades en este caso),
+añadiendo el repositorio para mariadb:
 
-Software libre para implantar IaaS:
 
-* [Eucalyptus](http://www.eucalyptus.com)
-* [OpenNebula](http://www.opennebula.org)
-* [CloudStack](http://cloudstack.apache.org/)
-* [OpenStack](http://www.openstack.org)
+~~~
+apt-get install software-properties-common
+apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80
+0xcbcb082a1bb943db
+add-apt-repository 'deb http://ftp.osuosl.org/pub/mariadb/repo/10.0/ubuntu
+trusty main'
+apt-get update
+apt-get install mariadb-galera-server
+~~~
 
-### Vídeos
+Ahora debemos crear el fichero de configuración de Galera llamado
+/etc/mysql/conf.d/cluster.cnf, en ambos nodos:
 
-* [Cloud computing: la visión de IBM](http://www.youtube.com/watch?v=5rBwfCf5LZE)
+
+~~~
+[mysqld]
+query_cache_size=0
+binlog_format=ROW
+default-storage-engine=innodb
+innodb_autoinc_lock_mode=2
+query_cache_type=0
+bind-address=0.0.0.0
+# Galera Provider Configuration
+wsrep_provider=/usr/lib/galera/libgalera_smm.so
+#wsrep_provider_options="gcache.size=32G"
+# Galera Cluster Configuration
+wsrep_cluster_name="olimpo_cluster"
+wsrep_cluster_address="gcomm://192.168.100.12,192.168.100.13"
+# Galera Synchronization Congifuration
+wsrep_sst_method=rsync
+#wsrep_sst_auth=user:pass
+# Galera Node Configuration
+wsrep_node_address="192.168.100.12"
+wsrep_node_name="zeus"
+~~~
+
+
+*Advertencia para el segundo nodo: Debemos cambiar las últimas dos líneas en el segundo
+nodo con su configuración específica.
+A continuación, en ambos nodos también, debemos comentar en el fichero /etc/mysql/my.cnf
+la siguiente línea para que no nos falle HAproxy más tarde:
+
+
+~~~
+#bind-address= 127.0.0.1
+~~~
+
+Debemos para los servicios de mysql en ambos nodos para la siguiente configuraciones:
+
+~~~
+Service mysql stop
+~~~
+
+
+Necesitamos copiar el fichero /etc/mysql/debian.cnf para que en ambos nodos sean iguales,
+lo pasamos del nodo 1 al nodo 2 (Importante: asegurarse de que los permisos finalmente son
+los apropiados):
+
+~~~
+scp /etc/mysql/debian.cnf usuario@192.168.100.13:/home/usuario/.
+~~~
+
+A continuación debemos iniciar un primer nodo de la siguiente forma:
+
+~~~
+service mysql start --wsrep-new-cluster
+~~~
+
+Una vez inicializado el primero, iniciamos el segundo de manera normal:
+
+~~~
+service mysql start
+~~~
+
+
+Entramos, por ejemplo, en Zeus e introducimos lo siguiente:
+
+
+~~~
+grant all on *.* to root@'%' identified by 'asdasd' with grant option;
+insert into mysql.user (Host,User) values ('192.168.100.10','haproxy');
+insert into mysql.user (Host,User) values ('192.168.100.11','haproxy');
+flush privileges;
+exit
+~~~
+
+Damos por finalizada la configuración de Galera, debemos irnos a los nodos de HAProxy y
+añadir la configuración de nuestro BD Cluster. Además necesitamos instalar el cliente de
+mysql, ya que HAproxy comprueba la disponibilidad del sistema logueandose en él. Para ello
+instalamos en los nodos Hera y Afrodita:
+
+~~~
+Apt-get install mysql-client
+~~~
+
+
+Y añadimos la configuración, como ya hemos comentado, en el fichero
+** /etc/haproxy/haproxy.cfg: **
+
+~~~
+listen galera 192.168.1.150:3306
+balance source
+mode tcp
+option tcpka
+option mysql-check user haproxy
+server zeus 192.168.100.12:3306 check weight 1
+server hades 192.168.100.13:3306 check weight 1
+~~~
+
+
+Finalmente hacemos un reload del servicio:
+
+~~~
+service haproxy reload
+~~~
+
+Si quisiéramos comprobarlo podríamos entrar desde el anfitrión o desde los nodos
+balanceadores a través de la VIP con la siguiente instrucción:
+
+~~~
+mysql -h 192.168.1.150 -u root -p
+~~~
+
+
+
+
+
+
+
+
+Y con esto tendríamos todos los paquetes necesarios.
+
+## CONFIGURACIÓN Y CREACIÓN DE LAS MÁQUINAS VIRTUALES
+
+Primero crearemos el bridge para conectar las máquinas, para ello editamos el fichero
+**/etc/network/interfaces**:
+
+~~~
+# The primary network interface
+iface eth0 inet static
+auto br0
+iface br0 inet static
+		bridge_ports eth0
+		address 192.168.1.100
+		netmask 255.255.255.0
+		gateway 192.168.1.1
+~~~
+
+Creamos una máquina virtual llamada Plantilla con **Ubuntu Server 14.04.2 LTS** y la clonamos
+para las 11, todo este proceso lo hicimos con virt-manager:
+
+~~~
+root@olimpo:/home/usuario# virsh list --all
+Id		Name				State
+----------------------------------------------------
+-		Afrodita 			shut off
+-		Apolo 				shut off
+-		Ares 				shut off
+-		Artemisa 			shut off
+-		Atenea 				shut off
+-		Hades 				shut off
+-		Hera 				shut off
+-		Poseidon 			shut off
+-		Zeus 				shut off
+~~~
+
+Una vez editada cada máquina con la RAM que describimos anteriormente, debemos cambiar
+en cada máquina los ficheros **/etc/hosts, /etc/hostname y /etc/network/interfaces** para
+editar las características de la plantilla:
+
+/etc/hosts:
+
+~~~
+IP 		nombre_mv
+~~~
+
+/etc/hostname:
+
+~~~
+nombre_mv
+~~~
+
+/etc/network/interfaces:
+
+~~~
+auto eth0
+iface eth0 inet static
+		address 192.168.100.11
+		netmask 255.255.255.0
+		network 192.168.100.0
+		broadcast 192.168.100.255
+		gateway 192.168.100.1
+		# dns-* options are implemented by the resolvconf package...
+		dns-nameservers 192.168.100.1
+~~~
+
+Sincronizamos las fecha y horas de todas las máquinas con un servidor ntp de internet:
+
+~~~
+ntpdate 3.es.pool.ntp.org
+~~~
+
+Hacemos una snapshot de cada máquina con:
+
+~~~
+root@olimpo:/home/usuario/Snapshots# virsh start maquina
+root@olimpo:/home/usuario/Snapshots# virsh save maquina nombre_snapshot
+root@olimpo:/home/usuario/Snapshots# ls
+afrodita_0 ares_0 atenea_0 zeus_0
+apolo_0 artemisa_0 hades_0 hera_0 poseidon_0
+~~~
+
+Ya tenemos nuestras máquinas listas para iniciar la instalación de Openstack.
