@@ -6,7 +6,7 @@ menu:
 ---
 
 En esta tabla e imagen detallamos el nombre de las máquinas virtuales creadas, su función
-dentro del cloud, su memoria RAM y su IP, todas ellas son Ubuntu Server 14.04.2 LTS y
+dentro del cloud, su memoria RAM y su IP, todas ellas son **Ubuntu Server 14.04.2 LTS** y
 virtualizadas sobre KVM:
 
 |NOMBRE MV|FUNCIÓN|MEMORIA RAM|IP|
@@ -23,7 +23,7 @@ virtualizadas sobre KVM:
 
 **IMAGEN DEL PROYECTO**
 
-## Instalación de KVM
+## INSTALACIÓN DE KVM
 
 Mediante repositorio del sistema:
 
@@ -34,3 +34,37 @@ aptitude install qemu-kvm libvirt-bin bridge-utils virt-manager
 ~~~
 
 Y con esto tendríamos todos los paquetes necesarios.
+
+## CONFIGURACIÓN Y CREACIÓN DE LAS MÁQUINAS VIRTUALES
+
+Primero crearemos el bridge para conectar las máquinas, para ello editamos el fichero
+**/etc/network/interfaces**:
+
+~~~
+# The primary network interface
+iface eth0 inet static
+auto br0
+iface br0 inet static
+	bridge_ports eth0
+	address 192.168.1.100
+	netmask 255.255.255.0
+	gateway 192.168.1.1
+~~~
+
+Creamos una máquina virtual llamada Plantilla con **Ubuntu Server 14.04.2 LTS** y la clonamos
+para las 11, todo este proceso lo hicimos con virt-manager:
+
+~~~
+root@olimpo:/home/usuario# virsh list --all
+Id		Name				State
+----------------------------------------------------
+-		Afrodita 			shut off
+-		Apolo 				shut off
+-		Ares 				shut off
+-		Artemisa 			shut off
+-		Atenea 				shut off
+-		Hades 				shut off
+-		Hera 				shut off
+-		Poseidon 			shut off
+-		Zeus 				shut off
+~~~
