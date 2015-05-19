@@ -45,10 +45,10 @@ Primero crearemos el bridge para conectar las máquinas, para ello editamos el f
 iface eth0 inet static
 auto br0
 iface br0 inet static
-	bridge_ports eth0
-	address 192.168.1.100
-	netmask 255.255.255.0
-	gateway 192.168.1.1
+		bridge_ports eth0
+		address 192.168.1.100
+		netmask 255.255.255.0
+		gateway 192.168.1.1
 ~~~
 
 Creamos una máquina virtual llamada Plantilla con **Ubuntu Server 14.04.2 LTS** y la clonamos
@@ -68,3 +68,51 @@ Id		Name				State
 -		Poseidon 			shut off
 -		Zeus 				shut off
 ~~~
+
+Una vez editada cada máquina con la RAM que describimos anteriormente, debemos cambiar
+en cada máquina los ficheros **/etc/hosts, /etc/hostname y /etc/network/interfaces** para
+editar las características de la plantilla:
+
+/etc/hosts:
+
+~~~
+IP 		nombre_mv
+~~~
+
+/etc/hostname:
+
+~~~
+nombre_mv
+~~~
+
+/etc/network/interfaces:
+
+~~~
+auto eth0
+iface eth0 inet static
+		address 192.168.100.11
+		netmask 255.255.255.0
+		network 192.168.100.0
+		broadcast 192.168.100.255
+		gateway 192.168.100.1
+		# dns-* options are implemented by the resolvconf package...
+		dns-nameservers 192.168.100.1
+~~~
+
+Sincronizamos las fecha y horas de todas las máquinas con un servidor ntp de internet:
+
+~~~
+ntpdate 3.es.pool.ntp.org
+~~~
+
+Hacemos una snapshot de cada máquina con:
+
+~~~
+root@olimpo:/home/usuario/Snapshots# virsh start maquina
+root@olimpo:/home/usuario/Snapshots# virsh save maquina nombre_snapshot
+root@olimpo:/home/usuario/Snapshots# ls
+afrodita_0 ares_0 atenea_0 zeus_0
+apolo_0 artemisa_0 hades_0 hera_0 poseidon_0
+~~~
+
+Ya tenemos nuestras máquinas listas para iniciar la instalación de Openstack.
