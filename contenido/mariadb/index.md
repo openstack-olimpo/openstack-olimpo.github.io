@@ -178,7 +178,7 @@ mysql>
 
 Vamos a comprobar que Zeus y Hades están funcionando correctamente:
 
-![STATS](img/funcionando.png)
+![STATS](img/stats_funcionando.png)
 
 
 Y para comprobar que todo está funcionando correctamente vamos a crear una base de datos con una tabla:
