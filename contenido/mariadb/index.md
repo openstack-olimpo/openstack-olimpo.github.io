@@ -56,16 +56,20 @@ default-storage-engine=innodb
 innodb_autoinc_lock_mode=2
 query_cache_type=0
 bind-address=0.0.0.0
+
 # Galera Provider Configuration
 wsrep_provider=/usr/lib/galera/libgalera_smm.so
 #wsrep_provider_options="gcache.size=32G"
+
 # Galera Cluster Configuration
 wsrep_cluster_name="olimpo_cluster"
 wsrep_cluster_address="gcomm://192.168.100.12,192.168.100.13"
+
 # Galera Synchronization Congifuration
 wsrep_sst_method=rsync
 #wsrep_sst_auth=user:pass
 # Galera Node Configuration
+
 wsrep_node_address="192.168.100.12"
 wsrep_node_name="zeus"
 ~~~
@@ -73,6 +77,7 @@ wsrep_node_name="zeus"
 
 *Advertencia para el segundo nodo: Debemos cambiar las últimas dos líneas en el segundo
 nodo con su configuración específica.
+
 A continuación, en ambos nodos también, debemos comentar en el fichero /etc/mysql/my.cnf
 la siguiente línea para que no nos falle HAproxy más tarde:
 
@@ -135,12 +140,12 @@ Y añadimos la configuración, como ya hemos comentado, en el fichero
 
 ~~~
 listen galera 192.168.1.150:3306
-balance source
-mode tcp
-option tcpka
-option mysql-check user haproxy
-server zeus 192.168.100.12:3306 check weight 1
-server hades 192.168.100.13:3306 check weight 1
+	balance source
+	mode tcp
+	option tcpka
+	option mysql-check user haproxy
+	server zeus 192.168.100.12:3306 check weight 1
+	server hades 192.168.100.13:3306 check weight 1
 ~~~
 
 
@@ -156,94 +161,3 @@ balanceadores a través de la VIP con la siguiente instrucción:
 ~~~
 mysql -h 192.168.1.150 -u root -p
 ~~~
-
-
-
-
-
-
-
-
-Y con esto tendríamos todos los paquetes necesarios.
-
-## CONFIGURACIÓN Y CREACIÓN DE LAS MÁQUINAS VIRTUALES
-
-Primero crearemos el bridge para conectar las máquinas, para ello editamos el fichero
-**/etc/network/interfaces**:
-
-~~~
-# The primary network interface
-iface eth0 inet static
-auto br0
-iface br0 inet static
-		bridge_ports eth0
-		address 192.168.1.100
-		netmask 255.255.255.0
-		gateway 192.168.1.1
-~~~
-
-Creamos una máquina virtual llamada Plantilla con **Ubuntu Server 14.04.2 LTS** y la clonamos
-para las 11, todo este proceso lo hicimos con virt-manager:
-
-~~~
-root@olimpo:/home/usuario# virsh list --all
-Id		Name				State
-----------------------------------------------------
--		Afrodita 			shut off
--		Apolo 				shut off
--		Ares 				shut off
--		Artemisa 			shut off
--		Atenea 				shut off
--		Hades 				shut off
--		Hera 				shut off
--		Poseidon 			shut off
--		Zeus 				shut off
-~~~
-
-Una vez editada cada máquina con la RAM que describimos anteriormente, debemos cambiar
-en cada máquina los ficheros **/etc/hosts, /etc/hostname y /etc/network/interfaces** para
-editar las características de la plantilla:
-
-/etc/hosts:
-
-~~~
-IP 		nombre_mv
-~~~
-
-/etc/hostname:
-
-~~~
-nombre_mv
-~~~
-
-/etc/network/interfaces:
-
-~~~
-auto eth0
-iface eth0 inet static
-		address 192.168.100.11
-		netmask 255.255.255.0
-		network 192.168.100.0
-		broadcast 192.168.100.255
-		gateway 192.168.100.1
-		# dns-* options are implemented by the resolvconf package...
-		dns-nameservers 192.168.100.1
-~~~
-
-Sincronizamos las fecha y horas de todas las máquinas con un servidor ntp de internet:
-
-~~~
-ntpdate 3.es.pool.ntp.org
-~~~
-
-Hacemos una snapshot de cada máquina con:
-
-~~~
-root@olimpo:/home/usuario/Snapshots# virsh start maquina
-root@olimpo:/home/usuario/Snapshots# virsh save maquina nombre_snapshot
-root@olimpo:/home/usuario/Snapshots# ls
-afrodita_0 ares_0 atenea_0 zeus_0
-apolo_0 artemisa_0 hades_0 hera_0 poseidon_0
-~~~
-
-Ya tenemos nuestras máquinas listas para iniciar la instalación de Openstack.
