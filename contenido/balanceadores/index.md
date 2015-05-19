@@ -22,7 +22,7 @@ Su modo de funcionamiento hace que su integración en arquitecturas existentes s
 y sin riesgo , sin dejar de ofrecer la posibilidad de no exponer los servidores web frágiles a la
 red , como a continuación:
 
-![HAPROXY](img/haproxy.png)
+		![HAPROXY](img/haproxy.png)
 
 Hacemos una snapshot de cada máquina con:
 
