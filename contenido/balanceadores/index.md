@@ -168,7 +168,7 @@ listen stats 192.168.1.110:80
 		stats auth admin:password
 ~~~
 
-\*Avertencia para el segundo nodo: Debemos especificar la IP correcta en log location y en
+\*Advertencia para el segundo nodo: Debemos especificar la IP correcta en log location y en
 stats listener. En stats auth ponemos el usuario y contraseña que queramos para acceder a la
 página de estadísticas que se crea con esa configuración a la que más tarde accederemos para
 comprobar que todo va correctamente.
