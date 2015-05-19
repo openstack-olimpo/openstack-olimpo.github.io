@@ -155,9 +155,93 @@ Finalmente hacemos un reload del servicio:
 service haproxy reload
 ~~~
 
-Si quisiéramos comprobarlo podríamos entrar desde el anfitrión o desde los nodos
-balanceadores a través de la VIP con la siguiente instrucción:
+Para comprobarlo vamos a entrar desde el Olimpo (anfitrión) a través de la VIP con la siguiente instrucción
 
 ~~~
-mysql -h 192.168.1.150 -u root -p
+root@olimpo:~# mysql -h 192.168.1.150 -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 1488
+Server version: 5.5.5-10.0.17-MariaDB-1~trusty-wsrep mariadb.org binary distribution, wsrep_25.10.r4144
+
+Copyright (c) 2000, 2015, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> 
 ~~~
+
+
+Vamos a comprobar que Zeus y Hades están funcionando correctamente:
+
+![STATS](img/funcionando.png)
+
+
+Y para comprobar que todo está funcionando correctamente vamos a crear una base de datos con una tabla:
+
+~~~
+mysql> create database test;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> use test
+Database changed
+mysql> create table prueba(id int);
+Query OK, 0 rows affected (0.43 sec)
+
+mysql> show tables;
++----------------+
+| Tables_in_test |
++----------------+
+| prueba         |
++----------------+
+1 row in set (0.00 sec)
+~~~
+
+
+Ahora vamos a apagar un nodo del cluster y veremos que sigue funcionando sin problemas:
+
+
+![STATS](img/stats_apagando.png)
+
+![STATS](img/stats_apagado.png)
+
+
+Una vez que está apagado Zeus vamos a volver a acceder al mysql:
+
+~~~
+root@olimpo:~# mysql -h 192.168.1.150 -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 1957
+Server version: 5.5.5-10.0.17-MariaDB-1~trusty-wsrep mariadb.org binary distribution, wsrep_25.10.r4144
+
+Copyright (c) 2000, 2015, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use test
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_test |
++----------------+
+| prueba         |
++----------------+
+1 row in set (0.00 sec)
+~~~
+
+
+Podemos ver la configuración con **show status;**
+
+
