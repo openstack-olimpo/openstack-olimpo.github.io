@@ -22,14 +22,63 @@ Su modo de funcionamiento hace que su integración en arquitecturas existentes s
 y sin riesgo , sin dejar de ofrecer la posibilidad de no exponer los servidores web frágiles a la
 red , como a continuación:
 
-		![HAPROXY](img/haproxy.png)
+![HAPROXY](img/haproxy.png)
 
-Hacemos una snapshot de cada máquina con:
+## KEEPALIVED
+
+Keepalived es un software de enrutamiento escrito en C. El objetivo principal de este proyecto
+es proporcionar instalaciones simples y robustas para balanceadores de carga y de alta
+disponibilidad para los sistemas Linux y las infraestructuras basadas en Linux. Keepalived
+implementa un conjunto de "fichas" para mantener y administrar grupo de servidores en
+equilibrio de carga de acuerdo a su "salud" de forma dinámica y adaptativa. Por otra parte, la
+alta disponibilidad se consigue mediante el protocolo VRRP. VRRP es un pilar fundamental para
+la conmutación por error.
+
+Keepalived es software libre; puedes redistribuirlo y / o modificarlo bajo los términos de la
+Licencia Pública General GNU publicada por la Fundación para el Software Libre; ya sea la
+versión 2 de la Licencia, o (a su elección) cualquier versión posterior.
+
+## INSTALACIÓN Y CONFIGURACIÓN
+
+Los dos servidores de Proxy son Hera y Afrodita (Ver tabla), estos dos servidores poseen una
+interfaz en modo puente para acceder de manera "pública".
+
+La configuración que vamos a realizar se debe de hacer en los dos nodos.
+
+Lo primero será configurar la interfaz de red puente. La añadimos en virt-manager en remoto y
+la añadimos en **/etc/network/interfaces**:
 
 ~~~
-root@olimpo:/home/usuario/Snapshots# virsh start maquina
-root@olimpo:/home/usuario/Snapshots# virsh save maquina nombre_snapshot
-root@olimpo:/home/usuario/Snapshots# ls
-afrodita_0 ares_0 atenea_0 zeus_0
-apolo_0 artemisa_0 hades_0 hera_0 poseidon_0
+auto eth1
+iface eth1 inet static
+		address 192.168.1.110
+		netmask 255.255.255.0
+		gateway 192.168.1.1
+		dns-nameserver 8.8.8.8
 ~~~
+
+Y levantamos la interfaz:
+
+~~~
+ifup eth1
+~~~
+
+>**ERROR**: Nos encontramos que cuando encendemos las máquinas quedan esperando la
+configuración de red desde el servidor DHCP (Cuando tienen configuradas una IP estática),
+demorando su arranque bastante tiempo.
+
+>**SOLUCIÓN**: Encontramos la solución:
+>http://www.linuxquestions.org/questions/linux-server-73/ubuntu-14-04-incredibly-slow-
+boot-without-network-4175510497/
+
+>Procedemos a comentar en el fichero /etc/init/failsafe.conf las dos líneas siguientes:
+>~~~
+$PLYMOUTH message --text="Waiting for network configuration..." || :
+sleep 40
+$PLYMOUTH message --text="Waiting up to 60 more seconds for network
+configuration..." || :
+sleep 59
+$PLYMOUTH message --text="Booting system without full network
+configuration..." || :
+>~~~
+>Y así obtenemos un tiempo de inicio aceptable.
