@@ -14,7 +14,7 @@ ficheros distribuido Ceph. Pretendemos montar este entorno y además realizar un
 Ansible para su despliegue automático.
 
 En esta documentación añadiremos los pasos y, además, todos los errores que encontraremos
-de configuración y como lo resolvemos. Así no solo tendremos una guía paso a paso.
+de configuración y como lo resolvemos (**ERROR** y **SOLUCIÓN**). Así no solo tendremos una guía paso a paso.
 
 ###Licencia
 
