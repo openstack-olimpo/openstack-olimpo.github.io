@@ -68,6 +68,7 @@ configuración de red desde el servidor DHCP (Cuando tienen configuradas una IP 
 demorando su arranque bastante tiempo.
 
 >**SOLUCIÓN**: Encontramos la solución:
+
 >[http://www.linuxquestions.org/questions/linux-server-73/ubuntu-14-04-incredibly-slow-
 boot-without-network-4175510497/](http://www.linuxquestions.org/questions/linux-server-73/ubuntu-14-04-incredibly-slow-
 boot-without-network-4175510497/])
@@ -167,7 +168,7 @@ listen stats 192.168.1.110:80
 		stats auth admin:password
 ~~~
 
-\*vertencia para el segundo nodo: Debemos especificar la IP correcta en log location y en
+\*Avertencia para el segundo nodo: Debemos especificar la IP correcta en log location y en
 stats listener. En stats auth ponemos el usuario y contraseña que queramos para acceder a la
 página de estadísticas que se crea con esa configuración a la que más tarde accederemos para
 comprobar que todo va correctamente.
