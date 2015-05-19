@@ -72,6 +72,7 @@ demorando su arranque bastante tiempo.
 boot-without-network-4175510497/
 
 >Procedemos a comentar en el fichero /etc/init/failsafe.conf las dos líneas siguientes:
+
 ~~~
 $PLYMOUTH message --text="Waiting for network configuration..." || :
 sleep 40
