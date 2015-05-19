@@ -45,7 +45,7 @@ apt-get install mariadb-galera-server
 ~~~
 
 Ahora debemos crear el fichero de configuración de Galera llamado
-/etc/mysql/conf.d/cluster.cnf, en ambos nodos:
+**/etc/mysql/conf.d/cluster.cnf**, en ambos nodos:
 
 
 ~~~
@@ -78,7 +78,7 @@ wsrep_node_name="zeus"
 *Advertencia para el segundo nodo: Debemos cambiar las últimas dos líneas en el segundo
 nodo con su configuración específica.
 
-A continuación, en ambos nodos también, debemos comentar en el fichero /etc/mysql/my.cnf
+A continuación, en ambos nodos también, debemos comentar en el fichero **/etc/mysql/my.cnf**
 la siguiente línea para que no nos falle HAproxy más tarde:
 
 
@@ -93,7 +93,7 @@ Service mysql stop
 ~~~
 
 
-Necesitamos copiar el fichero /etc/mysql/debian.cnf para que en ambos nodos sean iguales,
+Necesitamos copiar el fichero **/etc/mysql/debian.cnf** para que en ambos nodos sean iguales,
 lo pasamos del nodo 1 al nodo 2 (Importante: asegurarse de que los permisos finalmente son
 los apropiados):
 
@@ -136,7 +136,7 @@ Apt-get install mysql-client
 
 
 Y añadimos la configuración, como ya hemos comentado, en el fichero
-** /etc/haproxy/haproxy.cfg: **
+**/etc/haproxy/haproxy.cfg:**
 
 ~~~
 listen galera 192.168.1.150:3306
