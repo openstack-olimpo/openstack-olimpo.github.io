@@ -23,7 +23,7 @@ virtualizadas sobre KVM:
 
 **IMAGEN DEL PROYECTO**
 
-## INSTALACIÓN DE KVM
+### INSTALACIÓN DE KVM
 
 Mediante repositorio del sistema:
 
@@ -35,7 +35,7 @@ aptitude install qemu-kvm libvirt-bin bridge-utils virt-manager
 
 Y con esto tendríamos todos los paquetes necesarios.
 
-## CONFIGURACIÓN Y CREACIÓN DE LAS MÁQUINAS VIRTUALES
+### CONFIGURACIÓN Y CREACIÓN DE LAS MÁQUINAS VIRTUALES
 
 Primero crearemos el bridge para conectar las máquinas, para ello editamos el fichero
 **/etc/network/interfaces**:

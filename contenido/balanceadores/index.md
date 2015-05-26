@@ -38,7 +38,7 @@ Keepalived es software libre; puedes redistribuirlo y / o modificarlo bajo los t
 Licencia Pública General GNU publicada por la Fundación para el Software Libre; ya sea la
 versión 2 de la Licencia, o (a su elección) cualquier versión posterior.
 
-## INSTALACIÓN Y CONFIGURACIÓN
+### INSTALACIÓN Y CONFIGURACIÓN
 
 Los dos servidores de Proxy son Hera y Afrodita (Ver tabla), estos dos servidores poseen una
 interfaz en modo puente para acceder de manera "pública".

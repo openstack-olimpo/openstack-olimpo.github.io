@@ -28,7 +28,7 @@ World’s most advanced features
 + Smaller client latencies
 
 
-## INSTALACIÓN Y CONFIGURACIÓN
+### INSTALACIÓN Y CONFIGURACIÓN
 
 Lo primero será instalar los paquetes necesarios en ambos nodos (Zeus y Hades en este caso),
 añadiendo el repositorio para mariadb:
@@ -243,5 +243,3 @@ mysql> show tables;
 
 
 Podemos ver la configuración con **show status;**
-
-
