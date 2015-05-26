@@ -150,7 +150,7 @@ service keystone restart
 keystone-manage db_sync
 ~~~
 
-Comprobamos que se ha creado todas las tablas:
+Comprobamos que se han creado todas las tablas:
 
 ~~~
 MariaDB [(none)]> use keystone;
