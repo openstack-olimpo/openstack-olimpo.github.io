@@ -46,11 +46,13 @@ service rabbitmq-server stop
 ~~~
 
 Ahora necesitamos copiar por scp de Zeus a Hades una "cookie" de RabbitMQ, para ello necesitamos que en Hades este habilitado el usuario root para conectarnos:
+
 ~~~
 passwd root
 ~~~
 
 Ahora desde Zeus copiamos el fichero:
+
 ~~~
 scp /var/lib/rabbitmq/.erlang.cookie root@192.168.1.36:/var/lib/rabbitmq/.erlang.cookie
 ~~~
@@ -164,9 +166,7 @@ Y si accedemos a nuestro panel web de HAproxy:
 
 IMAGEN
 
-Por último debemos poblar Keystone con los usuarios y servicios, tenants, endpoints, etc...
-
-Para hacerlo todos de una vez utilizamos un script en Bash:
+Por último debemos poblar Keystone con los usuarios y servicios, tenants, endpoints, etc... Para hacerlo todos de una vez utilizamos un script en Bash:
 
 **Fichero keystone.sh**:
 
