@@ -14,7 +14,7 @@ virtualizadas sobre KVM:
 |**HERA**|Proxy 1|256 MB|192.168.100.10|
 |**AFRODITA**|Proxy 2|256 MB|192.168.100.11|
 |**ZEUS**|Controlador 1|1 GB|192.168.100.12|
-|**HADES**|Controlador 2 1|1 GB|192.168.100.13|
+|**HADES**|Controlador 2|1 GB|192.168.100.13|
 |**POSEIDON**|Ceph 1|1 GB|192.168.100.14|
 |**APOLO**|Ceph 2|1 GB|192.168.100.15|
 |**ARTEMISA**|Ceph 3|1 GB|192.168.100.16|
