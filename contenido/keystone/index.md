@@ -29,7 +29,7 @@ Lo primero en ambos nodos editamos el ficher **/etc/hosts**:
 
 ## RABBITMQ
 
-INFODERABBIT
+RabbitMQ es un software de negociación de mensajes. Implemente el estándar AMQP (Advanced Message Queuing Protocol)
 
 ###INSTALACIÓN Y CONFIGURACIÓN
 
@@ -87,7 +87,7 @@ En el último comando vemos el estado de nuestro cluster de RabbitMQ.
 
 ## KEYSTONE
 
-INFO DE KEYSTONE
+Keystone es el servicio de identidad de Openstack, actúa como un sistema de autenticación de usuarios asignados a proyectos que pueden acceder. Es compatible con distintas formas de autenticación(usuario, contraseña, tokens)
 
 ###INSTALACIÓN Y CONFIGURACIÓN
 
@@ -114,7 +114,33 @@ Como observamos la base de datos la apuntamos a nuestra IP virtual.
 A continuación debemos crear la base de datos para keystone y el usuario correspondiente desde cualquier nodo:
 
 ~~~
+root@zeus:/home/usuario# mysql -h 192.168.1.150 -u root -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 79
+Server version: 10.0.17-MariaDB-1~trusty-wsrep mariadb.org binary distribution, wsrep_25.10.r4144
 
+Copyright (c) 2000, 2015, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> create database keystoe;
+Query OK, 1 row affected (0.07 sec)
+
+MariaDB [(none)]> drop database keystoe;
+Query OK, 0 rows affected (0.04 sec)
+
+MariaDB [(none)]> create database keystone;
+Query OK, 1 row affected (0.05 sec)
+
+MariaDB [(none)]> grant all on keystone.* to keystone@'%' identified by 'asdasd';
+Query OK, 0 rows affected (0.04 sec)
+
+MariaDB [(none)]> flush privileges;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [(none)]> exit;
+Bye
 ~~~
 
 Ahora en Zeus, debemos reiniciar el servicio y poblar la estructura de la base de datos de keystone:
@@ -122,6 +148,39 @@ Ahora en Zeus, debemos reiniciar el servicio y poblar la estructura de la base d
 ~~~
 service keystone restart
 keystone-manage db_sync
+~~~
+
+Comprobamos que se ha creado todas las tablas:
+
+~~~
+MariaDB [(none)]> use keystone;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MariaDB [keystone]> show tables
+    -> ;
++-----------------------+
+| Tables_in_keystone    |
++-----------------------+
+| assignment            |
+| credential            |
+| domain                |
+| endpoint              |
+| group                 |
+| migrate_version       |
+| policy                |
+| project               |
+| region                |
+| role                  |
+| service               |
+| token                 |
+| trust                 |
+| trust_role            |
+| user                  |
+| user_group_membership |
++-----------------------+
+16 rows in set (0.00 sec)
 ~~~
 
 Cuando instalamos Keystone en cada nodo, nos crea un certificado autofirmado para firmar los tokens de autorización. Debemos hacer coincidir estos certificados pasando de Zeus a Hades el suyo:
@@ -164,7 +223,7 @@ service haproxy reload
 
 Y si accedemos a nuestro panel web de HAproxy:
 
-IMAGEN
+![STATS](img/keystone_stats.png)
 
 Por último debemos poblar Keystone con los usuarios y servicios, tenants, endpoints, etc... Para hacerlo todos de una vez utilizamos un script en Bash:
 
