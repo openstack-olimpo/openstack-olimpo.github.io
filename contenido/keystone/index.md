@@ -31,6 +31,13 @@ Lo primero en ambos nodos editamos el ficher **/etc/hosts**:
 
 RabbitMQ es un software de negociación de mensajes. Implemente el estándar AMQP (Advanced Message Queuing Protocol)
 
+El proyecto RabbitMQ consta de diferentes partes:
+
++ El servidor de intercambio RabbitMQ en sí mismo
++ Pasarelas para los protocolos HTTP, XMPP y STOMP.
++ Bibliotecas de clientes para Java y el framework .NET. (Bibliotecas similares para otros lenguajes se encuentran disponibles por parte de otros proveedores).
++ El plugin Shovel (pala) que se encarga de copiar (replicar) mensajes desde un corredor de mensajes a otros
+
 ###INSTALACIÓN Y CONFIGURACIÓN
 
 En ambos nodos instalamos RabbitMQ y ntp:
