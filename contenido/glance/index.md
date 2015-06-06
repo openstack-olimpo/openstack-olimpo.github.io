@@ -158,7 +158,7 @@ listen glance-registry 192.168.1.150:9191
 Y reiniciamos el servicio en ambas máquinas:
 
 ~~~
-service haproxy reload**
+service haproxy reload
 ~~~
 
 Para comprobar que funciona correctamente vamos a añadir una imagen:
