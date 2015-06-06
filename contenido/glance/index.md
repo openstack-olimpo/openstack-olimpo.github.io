@@ -166,17 +166,18 @@ Para comprobar que funciona correctamente vamos a añadir una imagen:
 ~~~
  wget http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
  glance image-create --name CirrOS-3.4 --is-public=true --disk-format=qcow2 --container-format=bare < cirros-0.3.4-x86_64-disk.img
- ~~~
+~~~
 
  Y comprobamos que se ha añadido correctamente:
 
- ~~~
+~~~
 +--------------------------------------+-----------------+-------------+------------------+-----------+--------+
 | ID                                   | Name            | Disk Format | Container Format | Size      | Status |
 +--------------------------------------+-----------------+-------------+------------------+-----------+--------+
 | 7b15fbd6-bbf3-4a13-81be-85f2384e63c5 | CirrOS-3.4      | qcow2       | bare             | 13287936  | active |
 | 51d93ce4-5f27-432e-a53d-77959bac82e6 | Debian-8-Jessie | qcow2       | bare             | 468853760 | active |
 +--------------------------------------+-----------------+-------------+------------------+-----------+--------+
+~~~
 
 Hemos añadido también una imagen Debian Jessie para comprobar el espacio usado de Ceph:
 
