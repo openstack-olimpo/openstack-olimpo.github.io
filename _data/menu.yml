@@ -1,76 +1,3 @@
-- nombre: Unidad 1
-  items:
-   - name: Cloud Computing
-     url: /cloud/curso/u1
-   - name: OpenStack
-     url: /cloud/curso/u1/openstack
-   - name: OpenShift
-     url: /cloud/curso/u1/openshift  
-- nombre: Unidad 2
-  items:
-   - name: DevOps
-     url: /cloud/curso/u2
-   - name: Git
-     url: /cloud/curso/u2/git
-   - name: Vagrant
-     url: /cloud/curso/u2/vagrant
-   - name: Ansible
-     url: /cloud/curso/u2/ansible
-- nombre: Unidad 3
-  items:
-   - name: Entornos
-     url: /cloud/curso/u3
-   - name: DevStack
-     url: /cloud/curso/u3/devstack
-   - name: RDO
-     url: /cloud/curso/u3/rdo
-   - name: OpenStack-ansible
-     url: /cloud/curso/u3/openstack-ansible
-   - name: Prácticas
-     url: /cloud/curso/u3/practicas
- 
-- nombre: Unidad 4
-  items:
-   - name: OpenStack Grizzly
-     url: /cloud/curso/u4
-   - name: Práctica Linux
-     url: /cloud/curso/u4/practica_linux
-   - name: Práctica Windows
-     url: /cloud/curso/u4/practica_windows
-
-- nombre: Unidad 5
-  items:
-- nombre: Unidad 6
-  items:
-- nombre: Unidad 7
-  items:
-- nombre: Unidad 8
-  items:
-  - name: Redes
-    url: /cloud/curso/u8
-  - name: Open vSwitch
-    url: openvswitch
-  - name: Red privada
-    url: red-privada
-  - name: Red exterior
-    url: red-exterior
-- nombre: Unidad 9
-  items:
-  - name: OpenShift
-    url: index
-  - name: OpenShift online
-    url: online
-  - name: rhc
-    url: rhc
-  - name: Avanzado
-    url: avanzado
-- nombre: Unidad 10
-  items:
-  - name: Educación
-    url: index
-  - name: Tareas
-    url: tareas
-
 - nombre: Índice
   items:
    - name: Inicio
@@ -87,3 +14,15 @@
      url: /contenido/mariadb
    - name: Keystone y RabbitMQ
      url: /contenido/keystone
+   - name: Ceph
+     url: /contenido/ceph
+   - name: Glance sobre Ceph
+     url: /contenido/glance
+   - name: Cinder sobre Ceph
+     url: /contenido/Cinder
+   - name: Nova y Horizon
+     url: /contenido/novahorizon
+   - name: Nodos de Computación
+     url: /contenido/computacion
+   - name: Instanciar sobre volúmen en Ceph
+     url: /contenido/instanciar
