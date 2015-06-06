@@ -1,6 +1,6 @@
 ---
 layout: blog
-tittle: Nova y Horizon
+tittle: Neutron
 menu:
   - Índice
 ---

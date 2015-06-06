@@ -20,9 +20,13 @@
      url: /contenido/glance
    - name: Cinder sobre Ceph
      url: /contenido/cinder
-   - name: Nova y Horizon
-     url: /contenido/novahorizon
+   - name: Nova - Nodos Controladores
+     url: /contenido/nova
+   - name: Neutron
+     url: /contenido/neutron
    - name: Nova - Nodos de Computación
      url: /contenido/computacion
+   - name: Horizon
+     url: /contenido/horizon
    - name: Instanciar sobre volumen en Ceph
      url: /contenido/instanciar
