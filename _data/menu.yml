@@ -22,7 +22,7 @@
      url: /contenido/Cinder
    - name: Nova y Horizon
      url: /contenido/novahorizon
-   - name: Nodos de Computación
+   - name: Nova - Nodos de Computación
      url: /contenido/computacion
    - name: Instanciar sobre volumen en Ceph
      url: /contenido/instanciar
