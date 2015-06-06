@@ -7,10 +7,11 @@ menu:
 
 En este apartado configuraremos Glance sobre Ceph.
 
+## GLANCE
 
 Glance es el componente de Openstack que almacena imágenes. Las imágenes almacenadas se pueden utilizar como una plantilla. También se puede utilizar para almacenar y catalogar copias de seguridad.
 
-
+###INSTALACIÓN Y CONFIGURACIÓN
 
 Lo primero que vamos a realizar es la instalación de algunos paquetes en **Zeus y Hades** (nodos controladores).
 

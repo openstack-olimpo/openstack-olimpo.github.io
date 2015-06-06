@@ -7,10 +7,11 @@ menu:
 
 En este apartado configuraremos Cinder sobre Ceph.
 
+## CINDER
 
 Cinder es el componente de Openstack que ofrece dispositivos de bloques.
 
-
+###INSTALACIÓN Y CONFIGURACIÓN
 
 Lo primero que vamos a realizar es la instalación de algunos paquetes en **Zeus y Hades** (nodos controladores).
 
