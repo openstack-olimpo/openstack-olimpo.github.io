@@ -19,7 +19,7 @@
    - name: Glance sobre Ceph
      url: /contenido/glance
    - name: Cinder sobre Ceph
-     url: /contenido/Cinder
+     url: /contenido/cinder
    - name: Nova y Horizon
      url: /contenido/novahorizon
    - name: Nova - Nodos de Computación
