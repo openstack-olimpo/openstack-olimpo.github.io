@@ -1,6 +1,6 @@
 ---
 layout: blog
-tittle: Ejemplo.
+tittle: Ceph
 menu:
   - Índice
 ---

@@ -1,6 +1,6 @@
 ---
 layout: blog
-tittle: Ejemplo.
+tittle: Cinder sobre Ceph
 menu:
   - Índice
 ---

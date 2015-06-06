@@ -1,6 +1,6 @@
 ---
 layout: blog
-tittle: Ejemplo.
+tittle: Instanciar sobre volumen en Ceph
 menu:
   - Índice
 ---

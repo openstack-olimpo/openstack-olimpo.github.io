@@ -1,6 +1,6 @@
 ---
 layout: blog
-tittle: Ejemplo.
+tittle: Nova y Horizon
 menu:
   - Índice
 ---
