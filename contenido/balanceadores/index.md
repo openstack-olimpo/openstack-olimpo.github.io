@@ -107,6 +107,7 @@ apt-get update && apt-get install keepalived haproxy -y
 ~~~
 
 Creamos el fichero de configuración **/etc/keepalived/keepalived.conf**:
+
 ~~~
 global_defs {
   router_id hera
