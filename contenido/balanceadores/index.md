@@ -97,7 +97,7 @@ net.ipv4.ip_nonlocal_bind=1
 Para que surta efecto sin reiniciar:
 
 ~~~
-nsysctl -p
+sysctl -p
 ~~~
 
 Actualizamos e instalamos los paquetes necesarios:
