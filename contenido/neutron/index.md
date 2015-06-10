@@ -125,6 +125,10 @@ net.bridge.bridge-nf-call-arptables=1
 net.bridge.bridge-nf-call-iptables=1
 net.bridge.bridge-nf-call-ip6tables=1
 
+sysctl -p
+
+apt-get install neutron-plugin-ml2 neutron-plugin-openvswitch-agent neutron-l3-agent neutron-dhcp-agent
+
 
 /etc/neutron/l3_agent.ini
 
@@ -172,7 +176,16 @@ enable_security_group = True
 
 
 
+service openvswitch-switch restart
 
+ovs-vsctl add-br br-int
+ovs-vsctl add-br br-ex
+ovs-vsctl add-port br-ex eth1
+
+service neutron-plugin-openvswitch-agent restart
+service neutron-l3-agent restart
+service neutron-dhcp-agent restart
+service neutron-metadata-agent restart
 
 -----------
 Ejemplo con palabras en **Negrita**.
