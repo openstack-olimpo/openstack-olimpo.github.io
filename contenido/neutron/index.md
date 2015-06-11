@@ -192,3 +192,27 @@ service neutron-plugin-openvswitch-agent restart
 service neutron-l3-agent restart
 service neutron-dhcp-agent restart
 service neutron-metadata-agent restart
+
+Creamos algunas redes:
+
+neutron net-create ext-net --shared --router:external=True
+
+neutron subnet-create ext-net --name ext-subnet \
+  --allocation-pool start=192.168.1.200,end=192.168.1.220 \
+  --disable-dhcp --gateway 192.168.1.1 192.168.1.0/24
+
+
+# neutron net-list
++--------------------------------------+--------------+-----------------------------------------------------+
+| id                                   | name         | subnets                                             |
++--------------------------------------+--------------+-----------------------------------------------------+
+| 1a8e71ec-992f-4869-9ed0-9c26642b9d13 | red de admin | 7c6a81a5-88fd-4ff8-876f-57ba38d3569d 10.0.0.0/24    |
+| c2de4862-c291-402e-9ec6-cdd4738f1fba | ext-net      | db372eaf-8118-4b62-aa7f-731d30a8fc03 192.168.1.0/24 |
++--------------------------------------+--------------+-----------------------------------------------------+
+
+# neutron router-list
++--------------------------------------+-----------------+-----------------------------------------------------------------------------+
+| id                                   | name            | external_gateway_info                                                       |
++--------------------------------------+-----------------+-----------------------------------------------------------------------------+
+| 91229ea9-c870-4a9f-b126-82134d4f4e81 | router de admin | {"network_id": "c2de4862-c291-402e-9ec6-cdd4738f1fba", "enable_snat": true} |
++--------------------------------------+-----------------+-----------------------------------------------------------------------------+

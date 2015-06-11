@@ -5,6 +5,12 @@ menu:
   - Índice
 ---
 
+apt-get install nova-compute-qemu
+apt-get install python-guestfs
+
+
+
+
 Ejemplo con palabras en **Negrita**.
 
 >Ejemplo de texto en letra cursiva
