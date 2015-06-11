@@ -167,3 +167,28 @@ Y solo en Zeus:
 ~~~
 service neutron-server restart
 ~~~
+
+
+
+apt-get install neutron-plugin-ml2 neutron-plugin-openvswitch-agent neutron-l3-agent neutron-dhcp-agent
+
+
+/etc/neutron/dhcp_agent.ini
+
+~~~
+interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
+dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
+use_namespaces = True
+~~~~
+
+
+service openvswitch-switch restart
+ovs-vsctl add-br br-int
+ovs-vsctl add-br br-ex
+ovs-vsctl add-port br-ex eth1
+
+
+service neutron-plugin-openvswitch-agent restart
+service neutron-l3-agent restart
+service neutron-dhcp-agent restart
+service neutron-metadata-agent restart
