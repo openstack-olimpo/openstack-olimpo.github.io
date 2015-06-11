@@ -15,11 +15,17 @@ Neutron proporciona modelos de redes para diferentes aplicaciones o grupos de us
 
 ###INSTALACIÓN Y CONFIGURACIÓN
 
+Lo primero que haremos será crear la base de datos para neutron:
 
+~~~
 create database neutron character set utf8 collate utf8_general_ci;
 grant all on neutron.* to neutron@'%' identified by 'asdasd';
 flush privileges;
+~~~
 
+SCRIPT O A MANO¿?
+
+~~~
 keystone user-create --name neutron --pass asdasd --email neutron@olimpo.com
 
 keystone user-role-add --user neutron --tenant service --role admin
@@ -31,11 +37,28 @@ keystone endpoint-create \
   --publicurl http://192.168.100.12:9696 \
   --adminurl http://192.168.100.12:9696 \
   --internalurl http://192.168.100.12:9696
+~~~
 
+Ahora instalaremos los paquetes necesarios:
+
+~~~
 apt-get install neutron-server neutron-plugin-ml2
+~~~
 
-fichero
----
+Lo primero será descomentar y añadir al fichero **/etc/sysctl.conf** las siguientes ĺineas:
+
+~~~
+net.ipv4.ip_forward=1
+net.ipv4.conf.all.rp_filter=0
+net.ipv4.conf.default.rp_filter=0
+net.bridge.bridge-nf-call-arptables=1
+net.bridge.bridge-nf-call-iptables=1
+net.bridge.bridge-nf-call-ip6tables=1
+~~~
+
+Y configuramos el fichero **/etc/neutron/neutron.conf**:
+
+~~~
 [DEFAULT]
 lock_path = $state_path/lock
 core_plugin = neutron.plugins.ml2.plugin.Ml2Plugin
@@ -71,92 +94,11 @@ connection = mysql://neutron:asdasd@192.168.1.150/neutron
 [service_providers]
 service_provider=LOADBALANCER:Haproxy:neutron.services.loadbalancer.drivers.haproxy.plugin_driver.HaproxyOnHostPluginDriver:default
 service_provider=VPN:openswan:neutron.services.vpn.service_drivers.ipsec.IPsecVPNDriver:default
----
+~~~
 
-/etc/neutron/plugins/ml2/ml2_conf.ini
+Ahora editamos el fichero **/etc/neutron/plugins/ml2/ml2_conf.ini**:
 
----
-[ml2]
-type_drivers = gre
-tenant_network_types = gre
-mechanism_drivers = openvswitch
-[ml2_type_flat]
-[ml2_type_vlan]
-[ml2_type_gre]
-tunnel_id_ranges = 1:1000
-[ml2_type_vxlan]
-[securitygroup]
-firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
-enable_security_group = True
----
-
-
-/etc/nova/nova.conf (2 nodos)
-
----
-network_api_class = nova.network.neutronv2.api.API
-neutron_url = http://controller:9696
-neutron_auth_strategy = keystone
-neutron_admin_tenant_name = service
-neutron_admin_username = neutron
-neutron_admin_password = NEUTRON_PASS
-neutron_admin_auth_url = http://controller:35357/v2.0
-linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver
-firewall_driver = nova.virt.firewall.NoopFirewallDriver
-security_group_api = neutron
----
-
-(2 nodos)
-service nova-api restart
-service nova-scheduler restart
-service nova-conductor restart
-
-(Zeus)
-service neutron-server restart
-
-
-
-Añadir /etc/sysctl.conf (los 3 primeros están comentado)s
-
-net.ipv4.ip_forward=1
-net.ipv4.conf.all.rp_filter=0
-net.ipv4.conf.default.rp_filter=0
-net.bridge.bridge-nf-call-arptables=1
-net.bridge.bridge-nf-call-iptables=1
-net.bridge.bridge-nf-call-ip6tables=1
-
-sysctl -p
-
-apt-get install neutron-plugin-ml2 neutron-plugin-openvswitch-agent neutron-l3-agent neutron-dhcp-agent
-
-
-/etc/neutron/l3_agent.ini
-
-interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
-use_namespaces = True
-
-/etc/neutron/metadata_agent.ini
-
-auth_url = http://{{ controller_ip }}:5000/v2.0
-auth_region = {{ region }}
-admin_tenant_name = service
-admin_user = neutron
-admin_password = {{ neutron_identity_password }}
-
-nova_metadata_ip = {{ controller_ip }}
-metadata_proxy_shared_secret = {{ shared_secret }}
-
-
-
-/etc/nova/nova.conf (2 nodos)
-
-service_neutron_metadata_proxy = true
-neutron_metadata_proxy_shared_secret = asdasd
-
-service nova-api restart
-
-/etc/neutron/plugins/ml2/ml2_conf.ini
-
+~~~
 [ml2]
 type_drivers = gre
 tenant_network_types = gre
@@ -173,57 +115,55 @@ enable_tunneling = True
 [securitygroup]
 firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
 enable_security_group = True
-
-
-
-service openvswitch-switch restart
-
-ovs-vsctl add-br br-int
-ovs-vsctl add-br br-ex
-ovs-vsctl add-port br-ex eth1
-
-service neutron-plugin-openvswitch-agent restart
-service neutron-l3-agent restart
-service neutron-dhcp-agent restart
-service neutron-metadata-agent restart
-
------------
-Ejemplo con palabras en **Negrita**.
-
->Ejemplo de texto en letra cursiva
-
-Ejemmplo de insercion imagen:
-![nombre](ubicacion de la imagen)
-
-Ejemplo de enlace:
-[texto](url)
-
-Ejemplo de tabla:
-|NOMBRE MV|FUNCIÓN|MEMORIA RAM|IP|
-|:---:|------|------|------|
-|**HERA**|Proxy 1|256 MB|192.168.100.10|
-|**AFRODITA**|Proxy 2|256 MB|192.168.100.11|
-|**ZEUS**|Controlador 1|1 GB|192.168.100.12|
-|**HADES**|Controlador 2|1 GB|192.168.100.13|
-|**POSEIDON**|Ceph 1|1 GB|192.168.100.14|
-|**APOLO**|Ceph 2|1 GB|192.168.100.15|
-|**ARTEMISA**|Ceph 3|1 GB|192.168.100.16|
-|**ARES**|Computación 1|2 GB|192.168.100.17|
-|**ATENEA**|Computación 1|2 GB|192.168.100.18|
-
-## TITULO MAYOR - SECCION
-
-### SUBSECCION
-
-Ejemplo de lista:
-
-+ item 1
-+ item 2
-+ item 3
-
-Ejemplo para poner codigo:
 ~~~
-aptitude update
-aptitude upgrade
-aptitude install qemu-kvm libvirt-bin bridge-utils virt-manager
+
+Editamos también el fichero **/etc/neutron/l3_agent.ini**:
+
+~~~
+interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
+use_namespaces = True
+~~~
+
+Y el fichero **/etc/neutron/metadata_agent.ini**:
+
+~~~
+auth_url = http://{{ controller_ip }}:5000/v2.0
+auth_region = {{ region }}
+admin_tenant_name = service
+admin_user = neutron
+admin_password = {{ neutron_identity_password }}
+
+nova_metadata_ip = {{ controller_ip }}
+metadata_proxy_shared_secret = {{ shared_secret }}
+~~~
+
+Una vez finalizada la configuración en Zeus, debemos editar el fichero **/etc/nova/nova.conf** en los dos nodos controladores Zeus y Hades:
+
+~~~
+network_api_class = nova.network.neutronv2.api.API
+neutron_url = http://controller:9696
+neutron_auth_strategy = keystone
+neutron_admin_tenant_name = service
+neutron_admin_username = neutron
+neutron_admin_password = NEUTRON_PASS
+neutron_admin_auth_url = http://controller:35357/v2.0
+linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver
+firewall_driver = nova.virt.firewall.NoopFirewallDriver
+security_group_api = neutron
+service_neutron_metadata_proxy = true
+neutron_metadata_proxy_shared_secret = asdasd
+~~~
+
+Y reniciamos en los dos nodos los siguientes servicios:
+
+~~~
+service nova-api restart
+service nova-scheduler restart
+service nova-conductor restart
+~~~
+
+Y solo en Zeus:
+
+~~~
+service neutron-server restart
 ~~~
