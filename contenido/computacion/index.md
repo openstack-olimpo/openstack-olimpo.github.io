@@ -4,12 +4,23 @@ tittle: Nova - Nodos de computación
 menu:
   - Índice
 ---
+En este apartado vamos a configurar **Nova** en los nodos de **computación** llamados Ares y Atenea. Serán los encargados de levantar las instancias de nuestro cloud.
 
-apt-get install nova-compute-qemu
-apt-get install python-guestfs
+## NOVA
 
+Nova es un controlador de estructura cloud computing, que es la parte principal de un sistema de IaaS. Está diseñado para gestionar y automatizar los pools de los recursos del equipo y puede trabajar con tecnologías ampliamente disponibles de virtualización. KVM y Xen son las opciones disponibles para la tecnología de hipervisor, junto con la tecnología Hyper-V, la tecnología vSphere de VMware y la tecnología de contenedores Linux como LXC.
 
-/etc/nova/nova.conf
+###INSTALACIÓN Y CONFIGURACIÓN
+
+Todos estos pasos lo haremos en ambos nodos de computación.
+
+Lo primero que haremos será instalar los paquetes necesarios:
+
+~~~
+apt-get install nova-compute-qemu python-guestfs
+~~~
+
+Ahora editamos el fichero **/etc/nova/nova.conf**:
 
 ~~~
 [DEFAULT]
@@ -61,9 +72,11 @@ admin_user = nova
 admin_password = asdasd
 ~~~
 
+Y reiniciamos el servicio:
 
+~~~
 service nova-compute restart
-
+~~~
 
 
 /etc/sysctl.conf
@@ -131,51 +144,6 @@ tunnel_type = gre
 enable_tunneling = True
 
 
-
 service nova-compute restart
 service neutron-plugin-openvswitch-agent restart
 service openvswitch-switch restart
-
-
-
-
-
-Ejemplo con palabras en **Negrita**.
-
->Ejemplo de texto en letra cursiva
-
-Ejemmplo de insercion imagen:
-![nombre](ubicacion de la imagen)
-
-Ejemplo de enlace:
-[texto](url)
-
-Ejemplo de tabla:
-|NOMBRE MV|FUNCIÓN|MEMORIA RAM|IP|
-|:---:|------|------|------|
-|**HERA**|Proxy 1|256 MB|192.168.100.10|
-|**AFRODITA**|Proxy 2|256 MB|192.168.100.11|
-|**ZEUS**|Controlador 1|1 GB|192.168.100.12|
-|**HADES**|Controlador 2|1 GB|192.168.100.13|
-|**POSEIDON**|Ceph 1|1 GB|192.168.100.14|
-|**APOLO**|Ceph 2|1 GB|192.168.100.15|
-|**ARTEMISA**|Ceph 3|1 GB|192.168.100.16|
-|**ARES**|Computación 1|2 GB|192.168.100.17|
-|**ATENEA**|Computación 1|2 GB|192.168.100.18|
-
-## TITULO MAYOR - SECCION
-
-### SUBSECCION
-
-Ejemplo de lista:
-
-+ item 1
-+ item 2
-+ item 3
-
-Ejemplo para poner codigo:
-~~~
-aptitude update
-aptitude upgrade
-aptitude install qemu-kvm libvirt-bin bridge-utils virt-manager
-~~~
