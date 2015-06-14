@@ -4,7 +4,7 @@ tittle: Nova - Nodos de computación
 menu:
   - Índice
 ---
-En este apartado vamos a configurar **Nova** en los nodos de **computación** llamados Ares y Atenea. Serán los encargados de levantar las instancias de nuestro cloud.
+En este apartado vamos a configurar **Nova** en los nodos de **computación** llamados Ares y Atenea. Serán los encargados de levantar las instancias de nuestro cloud. Necesitarán tener instalados Nova y los agentes "clientes" de Neutron.
 
 ## NOVA
 
@@ -12,7 +12,7 @@ Nova es un controlador de estructura cloud computing, que es la parte principal 
 
 ###INSTALACIÓN Y CONFIGURACIÓN
 
-Todos estos pasos lo haremos en ambos nodos de computación.
+Todos estos pasos los haremos en ambos nodos de computación.
 
 Lo primero que haremos será instalar los paquetes necesarios:
 
@@ -78,20 +78,39 @@ Y reiniciamos el servicio:
 service nova-compute restart
 ~~~
 
+## NEUTRON
 
-/etc/sysctl.conf
+OpenStack Networking (Neutron, anteriormente Quantum) es un sistema para la gestión de redes y direcciones IP. Asegura que la red no presente el problema del cuello de botella o el factor limitante en un despliegue en la nube y ofrece a los usuarios un autoservicio real, incluso a través de sus configuraciones de red.
 
+Neutron proporciona modelos de redes para diferentes aplicaciones o grupos de usuarios. Los modelos estándar incluyen redes planas o VLAN para la separación de los servidores y el tráfico. Gestiona las direcciones IP, lo que permite direcciones IP estáticas o DHCP reservados. Direcciones IP flotantes permiten que el tráfico se redirija dinámicamente a cualquiera de sus recursos informáticos, que permite redirigir el tráfico durante el mantenimiento o en caso de fracaso. Los usuarios pueden crear sus propias redes, controlar el tráfico y conectar los servidores y los dispositivos a una o más redes. Los administradores pueden aprovechar las redes definidas por software de tecnología (SDN) como OpenFlow para permitir altos niveles de multiempresa y escala masiva. 
+
+
+###INSTALACIÓN Y CONFIGURACIÓN
+
+Aquí instalaremos los componentes necesarios de neutron para nuestras máquinas de computación. Todos estos pasos también los haremos en ambos nodos de computación.
+
+Lo primero será editar el fichero **/etc/sysctl.conf** para descomentar y/o añadir las siguientes lineas:
+
+~~~
 net.ipv4.conf.all.rp_filter=0
 net.ipv4.conf.default.rp_filter=0
 net.bridge.bridge-nf-call-arptables=1
 net.bridge.bridge-nf-call-iptables=1
 net.bridge.bridge-nf-call-ip6tables=1
+~~~
 
+Para hacer efectivos los cambios ejecutamos:
+
+~~~
 sysctl -p
+~~~
+A continuación, necesitamos instalar los siguientes paquetes:
 
+~~~
 apt-get install neutron-common neutron-plugin-ml2 neutron-plugin-openvswitch-agent
+~~~
 
-/etc/neutron/neutron.conf
+Una vez instalados, editamos el fichero **/etc/neutron/neutron.conf**:
 
 ~~~
 [DEFAULT]
@@ -123,9 +142,9 @@ service_provider=LOADBALANCER:Haproxy:neutron.services.loadbalancer.drivers.hapr
 service_provider=VPN:openswan:neutron.services.vpn.service_drivers.ipsec.IPsecVPNDriver:default
 ~~~
 
+También necesitamos editar el fichero **/etc/neutron/plugins/ml2/ml2_conf.ini**:
 
-/etc/neutron/plugins/ml2/ml2_conf.ini
-
+~~~
 [ml2]
 type_drivers = gre
 tenant_network_types = gre
@@ -142,8 +161,12 @@ enable_security_group = True
 local_ip = 192.168.100.17
 tunnel_type = gre
 enable_tunneling = True
+~~~
 
+Por último, reiniciamos todos los servicios implicados:
 
+~~~
 service nova-compute restart
 service neutron-plugin-openvswitch-agent restart
 service openvswitch-switch restart
+~~~
