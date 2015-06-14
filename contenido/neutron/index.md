@@ -23,22 +23,6 @@ grant all on neutron.* to neutron@'%' identified by 'asdasd';
 flush privileges;
 ~~~
 
-SCRIPT O A MANO¿?
-
-~~~
-keystone user-create --name neutron --pass asdasd --email neutron@olimpo.com
-
-keystone user-role-add --user neutron --tenant service --role admin
-
-keystone service-create --name neutron --type network --description "OpenStack Networking"
-
-keystone endpoint-create \
-  --service-id $(keystone service-list | awk '/ network / {print $2}') \
-  --publicurl http://192.168.100.12:9696 \
-  --adminurl http://192.168.100.12:9696 \
-  --internalurl http://192.168.100.12:9696
-~~~
-
 Ahora instalaremos los paquetes necesarios:
 
 ~~~
