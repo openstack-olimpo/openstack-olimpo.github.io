@@ -273,6 +273,8 @@ DEMO_USER=$(keystone user-create --name=demo --pass="$DEMO_PASSWORD" --email=dem
 NOVA_USER=$(keystone user-create --name=nova --pass="$SERVICE_PASSWORD" --tenant-id $SERVICE_TENANT --email=nova@olimpo.com | grep " id " | get_field 2)
 GLANCE_USER=$(keystone user-create --name=glance --pass="$SERVICE_PASSWORD" --tenant-id $SERVICE_TENANT --email=glance@olimpo.com | grep " id " | get_field 2)
 CINDER_USER=$(keystone user-create --name=cinder --pass="$SERVICE_PASSWORD" --tenant-id $SERVICE_TENANT --email=cinder@olimpo.com | grep " id " | get_field 2)
+NEUTRON_USER=$(keystone user-create --name=neutron --pass="$SERVICE_PASSWORD" --tenant-id $SERVICE_TENANT --email=neutron@olimpo.com | grep " id " | get_field 2)
+
 
 # ROLES
 ADMIN_ROLE=$(keystone role-create --name=admin | grep " id " | get_field 2)
@@ -283,11 +285,13 @@ keystone user-role-add --user-id $ADMIN_USER --role-id $ADMIN_ROLE --tenant-id $
 keystone user-role-add --tenant-id $SERVICE_TENANT --user-id $NOVA_USER --role-id $ADMIN_ROLE
 keystone user-role-add --tenant-id $SERVICE_TENANT --user-id $GLANCE_USER --role-id $ADMIN_ROLE
 keystone user-role-add --tenant-id $SERVICE_TENANT --user-id $CINDER_USER --role-id $ADMIN_ROLE
+keystone user-role-add --tenant-id $SERVICE_TENANT --user-id $NEUTRON_USER --role-id $ADMIN_ROLE
 keystone user-role-add --tenant-id $DEMO_TENANT --user-id $DEMO_USER --role-id $MEMBER_ROLE
 
 # Create services
 COMPUTE_SERVICE=$(keystone service-create --name nova --type compute --description 'OpenStack Compute Service' | grep " id " | get_field 2)
 VOLUME_SERVICE=$(keystone service-create --name cinder --type volume --description 'OpenStack Volume Service' | grep " id " | get_field 2)
+NETWORKING_SERVICE=$(keystone service-create --name neutron --type network --description 'OpenStack Networking Service' | grep " id " | get_field 2)
 IMAGE_SERVICE=$(keystone service-create --name glance --type image --description 'OpenStack Image Service' | grep " id " | get_field 2)
 IDENTITY_SERVICE=$(keystone service-create --name keystone --type identity --description 'OpenStack Identity' | grep " id " | get_field 2)
 
@@ -296,6 +300,7 @@ keystone endpoint-create --region $KEYSTONE_REGION --service-id $COMPUTE_SERVICE
 keystone endpoint-create --region $KEYSTONE_REGION --service-id $VOLUME_SERVICE --publicurl 'http://'"$KEYSTONE_HOST"':8776/v1/$(tenant_id)s' --adminurl 'http://'"$KEYSTONE_HOST"':8776/v1/$(tenant_id)s' --internalurl 'http://'"$KEYSTONE_HOST"':8776/v1/$(tenant_id)s'
 keystone endpoint-create --region $KEYSTONE_REGION --service-id $IMAGE_SERVICE --publicurl 'http://'"$KEYSTONE_HOST"':9292' --adminurl 'http://'"$KEYSTONE_HOST"':9292' --internalurl 'http://'"$KEYSTONE_HOST"':9292'
 keystone endpoint-create --region $KEYSTONE_REGION --service-id $IDENTITY_SERVICE --publicurl 'http://'"$KEYSTONE_HOST"':5000/v2.0' --adminurl 'http://'"$KEYSTONE_HOST"':35357/v2.0' --internalurl 'http://'"$KEYSTONE_HOST"':5000/v2.0'
+keystone endpoint-create --region $KEYSTONE_REGION --service-id $NETWORKING_SERVICE --publicurl 'http://192.168.100.12:9696' --adminurl 'http://192.168.100.12:9696' --internalurl 'http://192.168.100.12:9696'
 ~~~
 
 Esto lo lanzamos desde Zeus, por ejemplo, y si después lo apagamos y comprobamos en Hades la lista de usuarios de keystone comprobamos que tenemos los datos siempre disponibles:
