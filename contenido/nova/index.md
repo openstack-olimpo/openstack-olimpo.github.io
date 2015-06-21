@@ -41,9 +41,9 @@ enabled_apis=ec2,osapi_compute,metadata
 
 rpc_backend = nova.openstack.common.rpc.impl_kombu
 rabbit_hosts = 192.168.100.12,192.168.100.13
-my_ip = 192.168.1.12
+my_ip = 192.168.100.12
 
-vncserver_listen = 192.168.1.12
+vncserver_listen = 192.168.100.12
 vncserver_proxyclient_address = 192.168.1.150
 auth_strategy = keystone
 
