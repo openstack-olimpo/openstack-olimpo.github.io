@@ -21,7 +21,7 @@ virtualizadas sobre KVM:
 |**ARES**|Computación 1|2 GB|192.168.100.17|
 |**ATENEA**|Computación 1|2 GB|192.168.100.18|
 
-**IMAGEN DEL PROYECTO**
+![ESQUEMA](img/esquema.png)
 
 ### INSTALACIÓN DE KVM
 
